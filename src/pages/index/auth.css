@@ -1,0 +1,119 @@
+/* Фон и градиент */
+.auth-bg {
+  position: relative;
+  min-height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+  color: white;
+  background: linear-gradient(
+    to bottom right,
+    #0a001a,
+    #2b0060,
+    #a020f0
+  );
+}
+
+/* Подсветка (как Tailwind radial-gradient + pulse) */
+.auth-glow {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at top left, rgba(255,255,255,0.15), transparent 60%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.1), transparent 60%);
+  animation: pulse 3s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.15; }
+  100% { opacity: 0.3; }
+}
+
+/* Карточка */
+.auth-card-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 22px;
+}
+
+/* Заголовок */
+.auth-title {
+  font-size: 42px;
+  font-weight: 800;
+  background: linear-gradient(to right, #f0a3ff, #e2c6ff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.sparkle {
+  color: #f5b3ff;
+  animation: shimmer 1.8s infinite ease-in-out;
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.auth-subtitle {
+  color: rgba(255,255,255,0.6);
+}
+
+/* Поля */
+.auth-label {
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.auth-input {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+}
+
+.auth-input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+/* Кнопка */
+.auth-btn {
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: 600;
+  background: linear-gradient(to right, #b600ff, #7a00f5);
+  color: white;
+  border: none;
+  transition: 0.25s;
+}
+
+.auth-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #c300ff, #8a1bff);
+}
+
+/* Переключение */
+.auth-switch {
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+}
+
+.auth-switch-btn {
+  background: none;
+  border: none;
+  color: #f093ff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.25s;
+}
+
+.auth-switch-btn:hover {
+  color: #ffc7ff;
+}
