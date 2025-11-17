@@ -76,6 +76,8 @@ export default function ProjectPage() {
   const [showModal, setShowModal] = useState(false);
   const [message, setMessage] = useState("");
 
+  const navigate = useNavigate();
+
   if (!project)
     return <div className="text-white text-center mt-5">Проект не найден</div>;
 
@@ -167,7 +169,8 @@ export default function ProjectPage() {
                     color: "white",
                     fontSize: "18px",
                     boxShadow: "0 0 16px rgba(200,0,255,0.4)",
-                  }}        
+                  }}
+                  onClick={() => navigate("/chats")}        
                 >
                   Написать
                 </button>
