@@ -3,6 +3,7 @@ import IndexPage from './pages/index/App.jsx'
 import ProjectsPage from './pages/project/App.jsx'
 import ProjectPage from './pages/project/CardProject.jsx'
 import CreateProjectPage from './pages/project/CeateProject.jsx'
+import MyProjectPage from './pages/project/MyProjects.jsx'
 import ProfilePage from './pages/profile/App.jsx'
 import ChatPage from './pages/chat/App.jsx'
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/chats" element={<ChatPage />} />  
             <Route path="/create-project" element={<CreateProjectPage />} />
+            <Route path="/my-project" element={<MyProjectPage />} />
           </Routes>
         </Layout>
       </Router>
