@@ -119,7 +119,7 @@ export default function ProjectsPage() {
               </div>
 
               {/* направление */}
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <select
                   className="form-select text-white"
                   onChange={(e) => setField(e.target.value)}
@@ -134,9 +134,9 @@ export default function ProjectsPage() {
                   <option className="text-dark" value="Биология">Биология</option>
                 </select>
               </div>
-
+                
               {/* тип работы */}
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <select
                   className="form-select text-white"
                   onChange={(e) => setType(e.target.value)}
@@ -149,13 +149,27 @@ export default function ProjectsPage() {
                   <option className="text-dark" value="Курсовая работа">Курсовая работа</option>
                   <option className="text-dark" value="Дипломная работа">Дипломная работа</option>
                   <option className="text-dark" value="Научный проект">Научный проект</option>
-                </select>
+                </select>           
               </div>
-
-            </div>
+             
+              {/* Кнопка создания проекта */}
+              <div className="col-md-2">
+                <button
+                  className="btn w-100"
+                    style={{
+                      background: "linear-gradient(to right, #d900ff, #7f1aff)",
+                      color: "white",
+                      borderRadius: "14px",
+                      boxShadow: "0 0 12px rgba(200,0,255,0.4)",
+                    }}
+                  onClick={() => navigate("/create-project")}
+                >
+                  + Создать проект
+                </button>
+              </div>
+            </div>      
           </motion.div>
-
-
+          
           {/* ПРОЕКТЫ */}
           <div className="row g-4">
             {filtered.map((proj) => (
