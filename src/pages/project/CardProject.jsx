@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import Footer from "../../components/footer/Footer.jsx";
 import Header from "../../components/header/Header.jsx";
@@ -167,7 +167,7 @@ export default function ProjectPage() {
                     color: "white",
                     fontSize: "18px",
                     boxShadow: "0 0 16px rgba(200,0,255,0.4)",
-                  }}
+                  }}        
                 >
                   Написать
                 </button>

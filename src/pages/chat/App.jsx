@@ -2,13 +2,14 @@ import { useState } from "react";
 import Header from "../../components/header/Header.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import PatrickBackground from "../../components/background/ParticlesBackground.jsx";
-import { motion } from "framer-motion";
 
 // Компонент сообщения
 function Message({ msg, isOwn }) {
   return (
     <div
-      className={`d-flex mb-3 ${isOwn ? "justify-content-end" : "justify-content-start"}`}
+      className={`d-flex mb-3 ${
+        isOwn ? "justify-content-end" : "justify-content-start"
+      }`}
     >
       {!isOwn && (
         <img
@@ -38,7 +39,9 @@ function Message({ msg, isOwn }) {
         </div>
 
         <div
-          className={`small text-white-50 mt-1 ${isOwn ? "text-end" : ""}`}
+          className={`small text-white-50 mt-1 ${
+            isOwn ? "text-end" : ""
+          }`}
           style={{ fontSize: "12px" }}
         >
           {msg.time}
@@ -48,12 +51,15 @@ function Message({ msg, isOwn }) {
   );
 }
 
-// Данные
+/* ----------- ДАННЫЕ ----------- */
+
 const chatsProjects = [
   {
     id: 1,
     title: "Проект: Мобильное приложение",
     lastMessage: "Хорошо, отправлю вечером.",
+    lastTime: "12:45",
+    unread: 0,
     partner: "Иван Петров",
     avatar: "https://i.pravatar.cc/200?img=12",
     messages: [
@@ -68,6 +74,8 @@ const chatsProjects = [
     id: 2,
     title: "Проект: Исследование органических соединений",
     lastMessage: "Отлично, жду результаты.",
+    lastTime: "10:22",
+    unread: 3,
     partner: "Лаборатория ХимАналит",
     avatar: "https://i.pravatar.cc/200?img=34",
     messages: [
@@ -82,6 +90,8 @@ const chatsProjects = [
     id: 3,
     title: "Проект: Моделирование экосистемы",
     lastMessage: "Модель выглядит корректно.",
+    lastTime: "09:12",
+    unread: 1,
     partner: "Анна Кротова",
     avatar: "https://i.pravatar.cc/200?img=8",
     messages: [
@@ -98,6 +108,8 @@ const chatsPersonal = [
     id: 101,
     title: "Анна",
     lastMessage: "Спасибо!",
+    lastTime: "15:02",
+    unread: 0,
     partner: "Анна",
     avatar: "https://i.pravatar.cc/200?img=8",
     messages: [
@@ -110,6 +122,8 @@ const chatsPersonal = [
     id: 102,
     title: "Сергей",
     lastMessage: "Напишу позже!",
+    lastTime: "11:25",
+    unread: 2,
     partner: "Сергей",
     avatar: "https://i.pravatar.cc/200?img=20",
     messages: [
@@ -123,6 +137,8 @@ const chatsPersonal = [
     id: 103,
     title: "Марина",
     lastMessage: "Хорошо 😊",
+    lastTime: "18:04",
+    unread: 1,
     partner: "Марина",
     avatar: "https://i.pravatar.cc/200?img=31",
     messages: [
@@ -134,6 +150,7 @@ const chatsPersonal = [
 ];
 
 
+/* ----------- ЧАТ СТРАНИЦА ----------- */
 
 export default function ChatPage() {
   const [tab, setTab] = useState("projects");
@@ -155,6 +172,9 @@ export default function ChatPage() {
     };
 
     activeChat.messages.push(newMsg);
+    activeChat.lastMessage = message;
+    activeChat.lastTime = newMsg.time;
+
     setMessage("");
     setActiveChat({ ...activeChat });
   };
@@ -171,7 +191,9 @@ export default function ChatPage() {
           {/* Вкладки */}
           <div className="d-flex gap-3 mb-4">
             <button
-              className={`btn px-4 py-2 ${tab === "projects" ? "btn-light" : "btn-outline-light"}`}
+              className={`btn px-4 py-2 ${
+                tab === "projects" ? "btn-light" : "btn-outline-light"
+              }`}
               onClick={() => {
                 setTab("projects");
                 setActiveChat(chatsProjects[0]);
@@ -181,7 +203,9 @@ export default function ChatPage() {
             </button>
 
             <button
-              className={`btn px-4 py-2 ${tab === "personal" ? "btn-light" : "btn-outline-light"}`}
+              className={`btn px-4 py-2 ${
+                tab === "personal" ? "btn-light" : "btn-outline-light"
+              }`}
               onClick={() => {
                 setTab("personal");
                 setActiveChat(chatsPersonal[0]);
@@ -207,12 +231,18 @@ export default function ChatPage() {
               className="col-4 p-0 border-end"
               style={{ borderColor: "rgba(255,255,255,0.2)" }}
             >
-              <div className="list-group border-0" style={{ height: "100%", overflowY: "auto" }}>
+              <div
+                className="list-group border-0"
+                style={{ height: "100%", overflowY: "auto" }}
+              >
                 {chatList.map((chat) => (
                   <button
                     key={chat.id}
-                    onClick={() => setActiveChat(chat)}
-                    className={`list-group-item list-group-item-action bg-transparent text-white border-0 d-flex align-items-center gap-3 py-3 ${
+                    onClick={() => {
+                      chat.unread = 0;
+                      setActiveChat(chat);
+                    }}
+                    className={`list-group-item list-group-item-action bg-transparent text-white border-0 d-flex justify-content-between align-items-center py-3 ${
                       activeChat?.id === chat.id ? "active" : ""
                     }`}
                     style={{
@@ -222,16 +252,34 @@ export default function ChatPage() {
                           : "transparent",
                     }}
                   >
-                    <img
-                      src={chat.avatar}
-                      alt="avatar"
-                      className="rounded-circle"
-                      style={{ width: "50px", height: "50px" }}
-                    />
-                    <div>
-                      <div className="fw-bold">{chat.title}</div>
-                      <small className="text-white-50">{chat.lastMessage}</small>
+                    <div className="d-flex align-items-center gap-3">
+                      <img
+                        src={chat.avatar}
+                        alt="avatar"
+                        className="rounded-circle"
+                        style={{ width: "50px", height: "50px" }}
+                      />
+                      <div>
+                        <div className="fw-bold">{chat.title}</div>
+                        <small className="text-white-50">
+                          {chat.lastMessage}
+                        </small>
+                      </div>
                     </div>
+
+                    {/* Индикатор непрочитанных */}
+                    {chat.unread > 0 && (
+                      <span
+                        className="badge rounded-pill"
+                        style={{
+                          background: "linear-gradient(to right, #d900ff, #7f1aff)",
+                          fontSize: "12px",
+                          padding: "6px 10px",
+                        }}
+                      >
+                        {chat.unread}
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -240,21 +288,19 @@ export default function ChatPage() {
             {/* Окно чата */}
             <div className="col-8 d-flex flex-column p-0">
 
-              {/* Заголовок чата */}
+              {/* Заголовок */}
               <div
                 className="p-3 border-bottom"
                 style={{ borderColor: "rgba(255,255,255,0.2)" }}
               >
                 <h5 className="mb-0">{activeChat?.title}</h5>
+                <small className="text-white-50">{activeChat?.lastTime}</small>
               </div>
 
               {/* Сообщения */}
               <div
                 className="flex-grow-1 p-3"
-                style={{
-                  overflowY: "auto",
-                  height: "100%",
-                }}
+                style={{ overflowY: "auto", height: "100%" }}
               >
                 {activeChat?.messages?.map((msg) => (
                   <Message key={msg.id} msg={msg} isOwn={msg.own} />
@@ -262,9 +308,13 @@ export default function ChatPage() {
               </div>
 
               {/* Поле ввода */}
-              <div className="p-3 border-top" style={{ borderColor: "rgba(255,255,255,0.2)" }}>
+              <div
+                className="p-3 border-top"
+                style={{ borderColor: "rgba(255,255,255,0.2)" }}
+              >
                 <div className="d-flex gap-2">
                   <button className="btn btn-outline-light">📎</button>
+
                   <input
                     type="text"
                     className="form-control bg-transparent text-white"
@@ -272,15 +322,14 @@ export default function ChatPage() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                   />
+
                   <button className="btn btn-light" onClick={sendMessage}>
                     ➤
                   </button>
                 </div>
               </div>
-
             </div>
           </div>
-
         </main>
 
         <Footer />
