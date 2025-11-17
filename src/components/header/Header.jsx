@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
 import Logo from "../logo/logo.jsx"
+import { useNavigate } from "react-router-dom";
+
 export default function Header() {
-return(
+  const navigate = useNavigate();
+
+  return(
         <header
           className="position-fixed top-0 start-0 w-100 py-3 px-4 d-flex justify-content-between align-items-center"
           style={{
@@ -46,8 +50,9 @@ return(
               padding: "8px 18px",
               boxShadow: "0 0 12px rgba(200,0,255,0.4)",
             }}
+            onClick={() => navigate("/profile")}   // ← ДОБАВИЛ ПЕРЕХОД
           >
-            Войти
+            Профиль
           </button>
         </header>
 );

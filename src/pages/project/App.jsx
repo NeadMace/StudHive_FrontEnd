@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Search, Filter, Sparkles } from "lucide-react";
 import Header from '../../components/header/Header.jsx'
 import Footer from '../../components/footer/Footer.jsx'
+import { useNavigate } from "react-router-dom";
 
 // Данные проектов
 const projectsData = [
@@ -40,6 +41,8 @@ export default function ProjectsPage() {
   const [search, setSearch] = useState("");
   const [field, setField] = useState("");
   const [type, setType] = useState("");
+
+  const navigate = useNavigate();
 
   const filtered = projectsData.filter(
     (p) =>
@@ -194,6 +197,7 @@ export default function ProjectsPage() {
                     y: 0,
                     boxShadow: "0 0 10px 2px rgba(255, 128, 255, 0.3)",
                     }}
+                    onClick={() => navigate(`/project/${proj.id}`)}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
                     <h4
