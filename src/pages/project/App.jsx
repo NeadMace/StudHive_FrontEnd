@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Search, Filter, Sparkles } from "lucide-react";
 import Header from '../../components/header/Header.jsx'
 import Footer from '../../components/footer/Footer.jsx'
+import { useNavigate } from "react-router-dom";
 
 // Данные проектов
 const projectsData = [
@@ -40,6 +41,8 @@ export default function ProjectsPage() {
   const [search, setSearch] = useState("");
   const [field, setField] = useState("");
   const [type, setType] = useState("");
+
+  const navigate = useNavigate();
 
   const filtered = projectsData.filter(
     (p) =>
@@ -88,6 +91,7 @@ export default function ProjectsPage() {
             }}
           >
             <div className="row g-3 align-items-center">
+
               {/* поиск */}
               <div className="col-md-4 position-relative">
                 <Search
@@ -124,14 +128,14 @@ export default function ProjectsPage() {
                     border: "1px solid rgba(255,255,255,0.2)",
                   }}
                 >
-                  <option value="">Направление</option>
-                  <option value="Программирование">Программирование</option>
-                  <option value="Химия">Химия</option>
-                  <option value="Биология">Биология</option>
+                  <option className="text-dark" value="">Направление</option>
+                  <option className="text-dark" value="Программирование">Программирование</option>
+                  <option className="text-dark" value="Химия">Химия</option>
+                  <option className="text-dark" value="Биология">Биология</option>
                 </select>
               </div>
-
-              {/* тип */}
+                
+              {/* тип работы */}
               <div className="col-md-3">
                 <select
                   className="form-select text-white"
@@ -141,30 +145,31 @@ export default function ProjectsPage() {
                     border: "1px solid rgba(255,255,255,0.2)",
                   }}
                 >
-                  <option value="">Тип работы</option>
-                  <option value="Курсовая работа">Курсовая работа</option>
-                  <option value="Дипломная работа">Дипломная работа</option>
-                  <option value="Научный проект">Научный проект</option>
-                </select>
+                  <option className="text-dark" value="">Тип работы</option>
+                  <option className="text-dark" value="Курсовая работа">Курсовая работа</option>
+                  <option className="text-dark" value="Дипломная работа">Дипломная работа</option>
+                  <option className="text-dark" value="Научный проект">Научный проект</option>
+                </select>           
               </div>
-
-              {/* кнопка */}
+             
+              {/* Кнопка создания проекта */}
               <div className="col-md-2">
                 <button
                   className="btn w-100"
-                  style={{
-                    background: "linear-gradient(to right, #d900ff, #7f1aff)",
-                    color: "white",
-                    borderRadius: "14px",
-                    boxShadow: "0 0 12px rgba(200,0,255,0.4)",
-                  }}
+                    style={{
+                      background: "linear-gradient(to right, #d900ff, #7f1aff)",
+                      color: "white",
+                      borderRadius: "14px",
+                      boxShadow: "0 0 12px rgba(200,0,255,0.4)",
+                    }}
+                  onClick={() => navigate("/create-project")}
                 >
-                  <Filter size={16} className="me-1" /> Применить
+                  + Создать проект
                 </button>
               </div>
-            </div>
+            </div>      
           </motion.div>
-
+          
           {/* ПРОЕКТЫ */}
           <div className="row g-4">
             {filtered.map((proj) => (
@@ -194,6 +199,7 @@ export default function ProjectsPage() {
                     y: 0,
                     boxShadow: "0 0 10px 2px rgba(255, 128, 255, 0.3)",
                     }}
+                    onClick={() => navigate(`/project/${proj.id}`)}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
                     <h4
