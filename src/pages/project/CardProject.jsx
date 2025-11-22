@@ -112,6 +112,8 @@ export default function ProjectPage() {
  
   const [showCreateTask, setShowCreateTask] = useState(false);
 
+  const [showCloseModal, setShowCloseModal] = useState(false);
+
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -227,7 +229,7 @@ export default function ProjectPage() {
                       fontSize: "18px",
                       boxShadow: "0 0 16px rgba(200,0,255,0.4)",
                     }}
-                    onClick={() => navigate("/chats")}        
+                    onClick={() => navigate("/chats")}
                   >
                     Написать
                   </button>
@@ -245,6 +247,21 @@ export default function ProjectPage() {
                     onClick={() => setShowModal(true)}
                   >
                     Откликнуться на проект
+                  </button>
+
+                  {/* 🛑 КНОПКА ЗАКРЫТИЯ ПРОЕКТА */}
+                  <button
+                    className="btn mt-4 w-100 py-2"
+                    style={{
+                      background: "linear-gradient(to right, #ff4747, #ff1a1a)",
+                      borderRadius: "14px",
+                      color: "white",
+                      fontSize: "18px",
+                      boxShadow: "0 0 16px rgba(255,0,0,0.4)",
+                    }}
+                    onClick={() => setShowCloseModal(true)}
+                  >
+                    Закрыть проект
                   </button>
                 </motion.div>
               </div>
@@ -464,6 +481,66 @@ export default function ProjectPage() {
           </motion.div>
         </div>
       )}
+
+      {showCloseModal && (
+      <div
+        className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+        style={{
+          background: "rgba(0,0,0,0.6)",
+          zIndex: 9999,
+          backdropFilter: "blur(3px)",
+        }}
+        onClick={() => setShowCloseModal(false)}
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="p-4 rounded-4"
+          style={{
+            width: "420px",
+            background: "rgba(255,255,255,0.15)",
+            border: "1px solid rgba(255,255,255,0.3)",
+            backdropFilter: "blur(12px)",
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h4 className="mb-3">Закрыть проект?</h4>
+
+          <p className="text-white-50">
+            После закрытия проект станет недоступен для участников. Вы уверены?
+          </p>
+
+          <div className="d-flex gap-3 mt-4">
+            {/* Подтверждение */}
+            <button
+              className="btn w-50 py-2"
+              style={{
+                background: "linear-gradient(to right, #ff4747, #ff1a1a)",
+                borderRadius: "12px",
+                color: "white",
+                fontSize: "18px",
+              }}
+              onClick={() => {
+                console.log("Проект закрыт!");
+                navigate("/"); // или куда нужно
+              }}
+            >
+              Да, закрыть
+            </button>
+
+            {/* Отмена */}
+            <button
+              className="btn w-50 py-2 btn-outline-light"
+              style={{ borderRadius: "12px", fontSize: "18px" }}
+              onClick={() => setShowCloseModal(false)}
+            >
+              Отмена
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    )}
+
 
       {/* ---------- МОДАЛЬНОЕ ОКНО ---------- */}
       {showModal && (
