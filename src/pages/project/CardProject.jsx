@@ -109,6 +109,15 @@ export default function ProjectPage() {
   const [taskList, setTaskList] = useState(tasksData);
 
   const navigate = useNavigate();
+ 
+  const [showCreateTask, setShowCreateTask] = useState(false);
+
+  const [newTask, setNewTask] = useState({
+    title: "",
+    description: "",
+    deadline: "",
+    assignees: [""], // максимум два
+  });
 
   if (!project)
     return <div className="text-white text-center mt-5">Проект не найден</div>;
@@ -285,6 +294,19 @@ export default function ProjectPage() {
                     </div>
                   );
                 })}
+                <button
+                  className="btn mt-4 py-2 w-100"
+                  style={{
+                    background: "linear-gradient(to right, #d900ff, #7f1aff)",
+                    borderRadius: "14px",
+                    color: "white",
+                    fontSize: "18px",
+                    boxShadow: "0 0 16px rgba(200,0,255,0.4)",
+                  }}
+                  onClick={() => setShowCreateTask(true)}
+                >
+                  Создать задачу
+                </button>
               </div>
             </motion.div>
           )}
@@ -292,6 +314,156 @@ export default function ProjectPage() {
 
         <Footer />
       </div>
+
+      {/* МОДАЛКА СОЗДАНИЯ ЗАДАЧИ */}
+      {showCreateTask && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+          style={{
+            background: "rgba(0,0,0,0.6)",
+            zIndex: 10000,
+            backdropFilter: "blur(4px)",
+          }}
+          onClick={() => setShowCreateTask(false)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="p-4 rounded-4"
+            style={{
+              width: "520px",
+              background: "rgba(255,255,255,0.15)",
+              border: "1px solid rgba(255,255,255,0.25)",
+              backdropFilter: "blur(12px)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="mb-3">Создание задачи</h3>
+
+            {/* НАЗВАНИЕ */}
+            <label className="form-label">Название задачи</label>
+            <input
+              className="form-control text-white"
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.25)",
+              }}
+              value={newTask.title}
+              onChange={(e) =>
+                setNewTask({ ...newTask, title: e.target.value })
+              }
+            />
+
+            {/* ОПИСАНИЕ */}
+            <label className="form-label mt-3">Описание</label>
+            <textarea
+              className="form-control text-white"
+              style={{
+                minHeight: "120px",
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.25)",
+              }}
+              value={newTask.description}
+              onChange={(e) =>
+                setNewTask({ ...newTask, description: e.target.value })
+              }
+            />
+
+            {/* ДЕДЛАЙН */}
+            <label className="form-label mt-3">Дедлайн</label>
+            <input
+              type="date"
+              className="form-control text-white"
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.25)",
+              }}
+              value={newTask.deadline}
+              onChange={(e) =>
+                setNewTask({ ...newTask, deadline: e.target.value })
+              }
+            />
+
+            {/* ИСПОЛНИТЕЛИ */}
+            <label className="form-label mt-3">Исполнитель(и)</label>
+
+            {newTask.assignees.map((assignee, index) => (
+              <div className="d-flex align-items-center gap-2 mb-2" key={index}>
+                <select
+                  className="form-select text-white"
+                  style={{
+                    background: "rgba(255,255,255,0.08)",
+                    border: "1px solid rgba(255,255,255,0.25)",
+                  }}
+                  value={assignee}
+                  onChange={(e) => {
+                    const arr = [...newTask.assignees];
+                    arr[index] = e.target.value;
+                    setNewTask({ ...newTask, assignees: arr });
+                  }}
+                >
+                  <option className="text-dark" value="">Выберите исполнителя</option>
+                  <option className="text-dark" value="Иван Иванов">Иван Иванов</option>
+                  <option className="text-dark" value="Мария Смирнова">Мария Смирнова</option>
+                  <option className="text-dark" value="Андрей П.">Андрей П.</option>
+                </select>
+
+                {/* КНОПКА ДОБАВЛЕНИЯ 2-го */}
+                {index === newTask.assignees.length - 1 &&
+                  newTask.assignees.length < 2 && (
+                    <button
+                      className="btn btn-sm btn-light"
+                      onClick={() =>
+                        setNewTask({
+                          ...newTask,
+                          assignees: [...newTask.assignees, ""],
+                        })
+                      }
+                    >
+                      +
+                    </button>
+                  )}
+              </div>
+            ))}
+
+            {/* КНОПКИ */}
+            <div className="d-flex gap-3 mt-4">
+              <button
+                className="btn w-50 py-2"
+                style={{
+                  background: "linear-gradient(to right, #d900ff, #7f1aff)",
+                  borderRadius: "14px",
+                  color: "white",
+                  fontSize: "18px",
+                }}
+                onClick={() => {
+                  const newT = {
+                    id: Date.now(),
+                    title: newTask.title,
+                    description: newTask.description,
+                    deadline: newTask.deadline,
+                    assignee: newTask.assignees.join(", "),
+                    completed: false,
+                  };
+
+                  setTaskList((prev) => [...prev, newT]);
+                  setShowCreateTask(false);
+                }}
+              >
+                Создать
+              </button>
+
+              <button
+                className="btn btn-outline-light w-50 py-2"
+                style={{ borderRadius: "14px", fontSize: "18px" }}
+                onClick={() => setShowCreateTask(false)}
+              >
+                Отмена
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       {/* ---------- МОДАЛЬНОЕ ОКНО ---------- */}
       {showModal && (
