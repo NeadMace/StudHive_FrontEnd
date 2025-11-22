@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import Footer from "../../components/footer/Footer.jsx";
 import Header from "../../components/header/Header.jsx";
-import PatrickBackground from "../../components/background/ParticlesBackground.jsx";
 import { motion } from "framer-motion";
 
 // Имитация базы данных — как твой список проектов, но с полным описанием + заказчик
@@ -83,7 +82,6 @@ export default function ProjectPage() {
 
   return (
     <div className="auth-bg min-vh-100 position-relative text-white">
-      <PatrickBackground />
 
       <div style={{ position: "relative", zIndex: 5 }}>
         <Header />

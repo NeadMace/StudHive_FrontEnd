@@ -13,6 +13,9 @@ const projectsData = [
     field: "Программирование",
     type: "Курсовая работа",
     desc: "Создание приложения для отслеживания привычек студентов.",
+    customer: "Иван Петров",
+    start: "2025-02-01",
+    finish: "2025-03-11",
   },
   {
     id: 2,
@@ -20,6 +23,9 @@ const projectsData = [
     field: "Химия",
     type: "Научный проект",
     desc: "Работа в лаборатории по исследованию катализаторов.",
+    customer: "Лаборатория ХимАналит",
+    start: "2025-01-12",
+    finish: "2025-04-01",
   },
   {
     id: 3,
@@ -27,6 +33,9 @@ const projectsData = [
     field: "Биология",
     type: "Дипломная работа",
     desc: "Проект по созданию модели биоценоза.",
+    customer: "Анна Кротова",
+    start: "2025-02-20",
+    finish: "2025-06-30",
   },
   {
     id: 4,
@@ -34,8 +43,12 @@ const projectsData = [
     field: "Программирование",
     type: "Научный проект",
     desc: "Анализ текстов с помощью моделей ИИ.",
+    customer: "AI Trends",
+    start: "2025-02-15",
+    finish: "2025-05-20",
   },
 ];
+
 
 export default function ProjectsPage() {
   const [search, setSearch] = useState("");
@@ -218,6 +231,20 @@ export default function ProjectsPage() {
                     <span>📘 {proj.field}</span>
                     <span>🎓 {proj.type}</span>
                     </div>
+
+                    <hr style={{ borderColor: "rgba(255,255,255,0.25)" }} />
+
+{/* 👤 Заказчик */}
+<div className="small mt-2">
+  <span className="opacity-75">👤 Заказчик:</span>
+  <br />
+  <span className="fw-semibold">{proj.customer}</span>
+</div>
+
+{/* 🗓 Даты */}
+<div className="small mt-2 opacity-75">
+  🗓 <span>{proj.start}</span> — <span>{proj.finish}</span>
+</div>
                 </motion.div>
                 </motion.div>
             ))}

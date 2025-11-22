@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Header from "../../components/header/Header.jsx";
 import Footer from "../../components/footer/Footer.jsx";
-import PatrickBackground from "../../components/background/ParticlesBackground.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateProjectPage() {
@@ -34,7 +33,6 @@ export default function CreateProjectPage() {
 
   return (
     <div className="auth-bg min-vh-100 position-relative text-white">
-      <PatrickBackground />
 
       <div style={{ position: "relative", zIndex: 5 }}>
         <Header />
@@ -161,19 +159,39 @@ export default function CreateProjectPage() {
               }}
             />
 
-            {/* СРОКИ */}
-            <label className="form-label mt-3">Сроки выполнения</label>
-            <input
-              name="deadline"
-              value={form.deadline}
-              onChange={handleChange}
-              className="form-control text-white"
-              placeholder="Например: 20 дней"
-              style={{
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.25)",
-              }}
-            />
+            {/* ДАТЫ: СТАРТ + ФИНИШ */}
+              <div className="row mt-3">
+                <div className="col-md-6">
+                  <label className="form-label">Дата старта</label>
+                  <input
+                    type="date"
+                    name="start"
+                    value={form.start}
+                    onChange={handleChange}
+                    className="form-control text-white"
+                    style={{
+                      background: "rgba(255,255,255,0.08)",
+                      border: "1px solid rgba(255,255,255,0.25)",
+                    }}
+                  />
+                </div>
+
+                <div className="col-md-6">
+                  <label className="form-label">Дата финиша</label>
+                  <input
+                    type="date"
+                    name="end"
+                    value={form.end}
+                    onChange={handleChange}
+                    className="form-control text-white"
+                    style={{
+                      background: "rgba(255,255,255,0.08)",
+                      border: "1px solid rgba(255,255,255,0.25)",
+                    }}
+                  />
+                </div>
+              </div>
+
 
             {/* Требования */}
             <label className="form-label mt-3">Требования к участникам</label>

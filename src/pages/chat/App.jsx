@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Header from "../../components/header/Header.jsx";
 import Footer from "../../components/footer/Footer.jsx";
-import PatrickBackground from "../../components/background/ParticlesBackground.jsx";
 
 // Компонент сообщения
 function Message({ msg, isOwn }) {
@@ -181,7 +180,6 @@ export default function ChatPage() {
 
   return (
     <div className="auth-bg min-vh-100 position-relative text-white">
-      <PatrickBackground />
 
       <div style={{ position: "relative", zIndex: 5 }}>
         <Header />
@@ -228,11 +226,11 @@ export default function ChatPage() {
           >
             {/* Список чатов */}
             <div
-              className="col-4 p-0 border-end"
-              style={{ borderColor: "rgba(255,255,255,0.2)" }}
+              className="col-4 p-0 border-end d-flex flex-column"
+              style={{ borderColor: "rgba(255,255,255,0.2)" , height: "100%" }}
             >
               <div
-                className="list-group border-0"
+                className="list-group border-0 flex-grow-1"
                 style={{ height: "100%", overflowY: "auto" }}
               >
                 {chatList.map((chat) => (
@@ -286,7 +284,7 @@ export default function ChatPage() {
             </div>
 
             {/* Окно чата */}
-            <div className="col-8 d-flex flex-column p-0">
+            <div className="col-8 d-flex flex-column p-0" style={{ height: "100%" }}>
 
               {/* Заголовок */}
               <div
