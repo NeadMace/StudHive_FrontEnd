@@ -67,6 +67,14 @@ export default function Header() {
         >
           Контакты
         </span>
+
+        <span
+          className="text-decoration-none text-white-50"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/my-project")}
+        >
+          Мои проекты
+        </span>
       </nav>
 
       {/* Правая часть: уведомления + профиль */}
